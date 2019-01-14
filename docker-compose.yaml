@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  ## Server
+  server:
+    build: ./server
+    image: huikaihoo/test-polling-server
+    environment:
+      - SERVER_PORT
+    expose:
+      - ${SERVER_PORT}
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+  ## Client
+  client:
+    build: ./client
+    image: huikaihoo/test-polling-client
+    links:
+      - server
+    environment:
+      - SERVER_PORT
+      - CLIENT_PORT
+    expose:
+      - ${CLIENT_PORT}
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
